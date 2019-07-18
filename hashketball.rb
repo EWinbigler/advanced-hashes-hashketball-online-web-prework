@@ -110,7 +110,71 @@ hash = {home: {
       }
 end
 
+def num_points_scored(name)
+  if game_hash[:home][:players].keys.include?(name)
+    return game_hash[:home][:players][name][:points]
+  else
+    return game_hash[:away][:players][name][:points]
+  end
+end
 
+def shoe_size(name)
+  if game_hash[:home][:players].keys.include?(name)
+    return game_hash[:home][:players][name][:shoe]
+  else
+    return game_hash[:away][:players][name][:shoe]
+  end
+end
+
+def team_colors(name)
+  if game_hash[:home][:team_name] == name
+    return game_hash[:home][:colors]
+  else
+  return game_hash[:away][:colors]
+  end
+end
+
+def team_names
+  return [game_hash[:home][:team_name], game_hash[:away][:team_name]].flatten
+end
+
+def player_numbers(name)
+    if game_hash[:home][:team_name] == name
+      game_hash[:home][:players].map do |player, info|
+        info[:number]
+      end
+    else
+      game_hash[:away][:players].map do |player, info|
+        info[:number]
+      end
+    end
+end
+
+def player_stats(name)
+  if game_hash[:home][:players].keys.include?(name)
+    return game_hash[:home][:players][name]
+  else
+    return game_hash[:away][:players][name]
+  end
+end
+
+def big_shoe_rebounds
+   size = 0
+   rebounds = 0
+   game_hash.each do |team, team_data|
+     team_data.each do |key, value|
+       if key == :players
+         value.each do |x, v|
+           if v[:shoe] > size
+             size = v[:shoe]
+             rebounds = v[:rebounds]
+           end
+         end
+       end
+     end
+   end
+   return rebounds
+end
 
 
 
